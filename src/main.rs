@@ -40,7 +40,13 @@ fn main() {
 
         } //check if user wants to list employees
             else if input.to_lowercase().starts_with("list") {
+
                 let parts: Vec<&str> = input.split_whitespace().collect();
+
+                if company.is_empty(){
+                    let _dept = parts[1..].join(" ");
+                    println!("No employee listed in {} department", _dept);
+                }
 
                 if parts.len() == 2 && parts[1].eq_ignore_ascii_case("all"){
                     for (dept, employees) in &company {
@@ -49,15 +55,15 @@ fn main() {
                         println!("{}: {:?}", dept, sorted_employees);
                     }
                 } else {
-            let department = parts[1..].join(" ");
-            match company.get(&department){
-                Some(employees) =>{
-                    let mut sorted_employees = employees.clone();
-                    sorted_employees.sort();
-                    println!("{}: {:?}", department, sorted_employees);
-                    },
-                None => println!("No such department"),
-                }
+                    let department = parts[1..].join(" ");
+                    match company.get(&department){
+                        Some(employees) =>{
+                                let mut sorted_employees = employees.clone();
+                                sorted_employees.sort();
+                                println!("{}: {:?}", department, sorted_employees);
+                            },
+                        None => println!("No such department"),
+                    }
             }
         } else {
             println!("No such command exist");
